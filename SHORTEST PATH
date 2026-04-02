@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+#define N 4
+
+int cost[N][N] = {
+    {0, 2, 0, 1},
+    {2, 0, 3, 0},
+    {0, 3, 0, 4},
+    {1, 0, 4, 0}
+};
+
+// Find minimum distance vertex
+int min(int dist[], int visited[]) {
+    int min = 100000, pos = -1;
+
+    for (int i = 0; i < N; i++) {
+        if (!visited[i] && dist[i] < min) {
+            min = dist[i];
+            pos = i;
+        }
+    }
+    return pos;
+}
+
+// Dijkstra function
+void dijkstra(int start) {
+    int dist[N], visited[N];
+
+    // Initialize
+    for (int i = 0; i < N; i++) {
+        dist[i] = 100000;
+        visited[i] = 0;
+    }
+
+    dist[start] = 0;
+
+    // Main loop
+    for (int i = 0; i < N - 1; i++) {
+        int u = min(dist, visited);
+        visited[u] = 1;
+
+        for (int v = 0; v < N; v++) {
+            if (!visited[v] && cost[u][v] != 0 &&
+                dist[u] + cost[u][v] < dist[v]) {
+
+                dist[v] = dist[u] + cost[u][v];
+            }
+        }
+    }
+
+    // Print result
+    printf("Shortest distances from node %d:\n", start);
+    for (int i = 0; i < N; i++) {
+        printf("%d -> %d = %d\n", start, i, dist[i]);
+    }
+}
+
+int main() {
+    int start = 0;  // fixed starting vertex
+
+    dijkstra(start);
+
+    return 0;
+}
