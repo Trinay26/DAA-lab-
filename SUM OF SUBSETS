@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int set[10], subsetArr[10];
+int n, target;
+
+// Function to find subsets
+void subset(int index, int sum, int size) {
+
+    // If target achieved → print subset
+    if (sum == target) {
+        printf("Subset: ");
+        for (int i = 0; i < size; i++) {
+            printf("%d ", subsetArr[i]);
+        }
+        printf("\n");
+        return;
+    }
+
+    // If sum exceeds → stop
+    if (sum > target)
+        return;
+
+    // Try all elements
+    for (int i = index; i < n; i++) {
+        subsetArr[size] = set[i];   // store element
+        subset(i + 1, sum + set[i], size + 1);
+    }
+}
+
+int main() {
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &set[i]);
+    }
+
+    printf("Enter target sum: ");
+    scanf("%d", &target);
+
+    subset(0, 0, 0);
+
+    return 0;
+}
