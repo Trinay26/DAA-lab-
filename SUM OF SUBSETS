@@ -2,8 +2,11 @@
 
 int set[10], subsetArr[10];
 int n, target;
+
+// Function to find subsets
 void subset(int index, int sum, int size) {
 
+    
     if (sum == target) {
         printf("Subset: ");
         for (int i = 0; i < size; i++) {
@@ -13,11 +16,11 @@ void subset(int index, int sum, int size) {
         return;
     }
 
+    if (sum > target)
         return;
 
-    // Try all elements
     for (int i = index; i < n; i++) {
-        subsetArr[size] = set[i];   // store element
+        subsetArr[size] = set[i];   
         subset(i + 1, sum + set[i], size + 1);
     }
 }
